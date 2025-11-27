@@ -98,11 +98,11 @@ def delete_topic():
 async def main():
     create_topic()
 
-    # Run producer + consumer concurrently
-    await asyncio.gather(
-        run_consumer(),   # start consumer first
-        run_producer()
-    )
+    t1 = asyncio.create_task(run_producer())
+    t2 = asyncio.create_task(run_consumer())
+    
+    await t1
+    await t2
 
     delete_topic()
 
