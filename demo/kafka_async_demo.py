@@ -59,7 +59,10 @@ async def run_consumer():
 
     print("[Consumer] Waiting for messages...")
 
-    for _ in range(5):   # read 5 messages
+    received = 0
+    target = 5
+
+    while received < target:
         msg = consumer.poll(5.0)
         if msg is None:
             print("[Consumer] No message yet...")
@@ -69,6 +72,7 @@ async def run_consumer():
             raise KafkaException(msg.error())
 
         print(f"[Consumer] Received: {msg.value().decode()}")
+        received += 1
 
     consumer.close()
     print("[Consumer] Finished consuming messages.")
