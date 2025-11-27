@@ -36,6 +36,8 @@ jobs:
       - name: Wait for Kafka
         run: |
           echo "Waiting for Kafka to be ready..."
+          CONTAINER_NAME=$(docker ps --filter "ancestor=confluentinc/cp-kafka:7.5.0" --format "{{.Names}}" | head -n1)
+          echo $CONTAINER_NAME
           for i in {1..20}; do
            docker exec test-kafka-kafka-1 kafka-topics --bootstrap-server localhost:9092 --list && break
            echo "Waiting for Kafka..."
