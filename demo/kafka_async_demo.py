@@ -3,7 +3,7 @@ from confluent_kafka import Producer, Consumer, KafkaException
 from confluent_kafka.admin import AdminClient, NewTopic
 
 BOOTSTRAP_SERVERS = "localhost:9092"
-TOPIC = "demo-topic"
+TOPIC = "my-first-python-topic"
 
 # ------------------------------
 # 1. Admin: Create Topic
@@ -52,8 +52,7 @@ async def run_producer():
 async def run_consumer():
     consumer = Consumer({
         "bootstrap.servers": BOOTSTRAP_SERVERS,
-        "group.id": "demo-group",
-        "auto.offset_reset": "earliest"
+        "group.id": TOPIC
     })
 
     consumer.subscribe([TOPIC])
