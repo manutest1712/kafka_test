@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "Waiting for Kafka to be ready..."
           for i in {1..20}; do
-            if kafka-topics.sh --bootstrap-server localhost:9092 --list; then
+            if kafka-topics --bootstrap-server localhost:9092 --list; then
               echo "Kafka is ready!"
               break
             fi
