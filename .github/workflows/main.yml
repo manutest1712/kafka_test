@@ -37,11 +37,9 @@ jobs:
         run: |
           echo "Waiting for Kafka to be ready..."
           for i in {1..20}; do
-            if kafka-topics --bootstrap-server localhost:9092 --list; then
-              echo "Kafka is ready!"
-              break
-            fi
-            sleep 5
+           docker exec test-kafka-kafka-1 kafka-topics --bootstrap-server localhost:9092 --list && break
+           echo "Waiting for Kafka..."
+           sleep 5
           done
 
       - name: Create a test topic
