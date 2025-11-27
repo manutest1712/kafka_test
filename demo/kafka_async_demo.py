@@ -52,7 +52,8 @@ async def run_producer():
 async def run_consumer():
     consumer = Consumer({
         "bootstrap.servers": BOOTSTRAP_SERVERS,
-        "group.id": TOPIC
+        "group.id": "my-first-consumer-group",
+        "auto.offset.reset": "earliest"
     })
 
     consumer.subscribe([TOPIC])
