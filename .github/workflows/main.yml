@@ -49,6 +49,8 @@ jobs:
 
       - name: Create a test topic
         run: |
+          CONTAINER_NAME=$(docker ps --filter "ancestor=confluentinc/cp-kafka:7.5.0" --format "{{.Names}}" | head -n1)
+          echo "Kafka container name: $CONTAINER_NAME"
           docker exec $CONTAINER_NAME kafka-topics \
             --bootstrap-server localhost:9092 \
             --create \
@@ -57,4 +59,7 @@ jobs:
             --replication-factor 1
 
       - name: Verify topic list
-        run: docker exec $CONTAINER_NAME kafka-topics --bootstrap-server localhost:9092 --list
+        run: |
+          CONTAINER_NAME=$(docker ps --filter "ancestor=confluentinc/cp-kafka:7.5.0" --format "{{.Names}}" | head -n1)
+          echo "Kafka container name: $CONTAINER_NAME"
+          docker exec $CONTAINER_NAME kafka-topics --bootstrap-server localhost:9092 --list
