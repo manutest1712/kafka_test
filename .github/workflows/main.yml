@@ -11,11 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-jobs:
-  test-kafka:
-    runs-on: ubuntu-latest
-
-    services:
       zookeeper:
         image: confluentinc/cp-zookeeper:7.5.0
         env:
