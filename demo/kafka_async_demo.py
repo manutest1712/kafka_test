@@ -3,8 +3,25 @@ from confluent_kafka import Producer, Consumer, KafkaException
 from confluent_kafka.admin import AdminClient, NewTopic
 
 BOOTSTRAP_SERVERS = "localhost:9092"
-TOPIC = "my-first-python-topic"
+TOPIC = "my-first-python-topic-man"
 
+
+# ------------------------------
+# Delivery Callback Function
+# ------------------------------
+def delivery_report(err, msg):
+    """
+    Called once for each message produced to indicate delivery result.
+    Triggered by poll() or flush().
+    """
+    
+    print ('In delivery report')
+    if err is not None:
+        print(f'[Producer] Message delivery failed: {err}')
+    else:
+        print(f'[Producer] Message successfully delivered to {msg.topic()} [{msg.partition()}] at offset {msg.offset()}')
+        
+        
 # ------------------------------
 # 1. Admin: Create Topic
 # ------------------------------
@@ -38,10 +55,9 @@ async def run_producer():
     for i in range(5):
         msg = f"Message {i}"
         print(f"[Producer] Sending: {msg}")
-        producer.produce(TOPIC, msg.encode("utf-8"))
-
+        producer.produce(TOPIC, value=msg.encode("utf-8"), callback=delivery_report)
+        print("Poll invoked")
         producer.poll(0)
-        await asyncio.sleep(1)
 
     producer.flush()
     print("[Producer] Finished sending messages.")
