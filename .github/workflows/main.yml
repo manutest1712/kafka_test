@@ -1,0 +1,58 @@
+jobs:
+  test-kafka:
+    runs-on: ubuntu-latest
+
+    services:
+      zookeeper:
+        image: bitnami/zookeeper:latest
+        env:
+          ZOO_ENABLE_AUTH: "no"
+          ALLOW_ANONYMOUS_LOGIN: "yes"
+        ports:
+          - 2181:2181
+        options: >-
+          --health-cmd="echo ruok | nc localhost 2181"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=5
+
+      kafka:
+        image: bitnami/kafka:latest
+        env:
+          KAFKA_CFG_ZOOKEEPER_CONNECT: "zookeeper:2181"
+          ALLOW_PLAINTEXT_LISTENER: "yes"
+          KAFKA_CFG_LISTENERS: PLAINTEXT://:9092
+          KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+        ports:
+          - 9092:9092
+        options: >-
+          --health-cmd="kafka-topics.sh --bootstrap-server localhost:9092 --list"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Wait for Kafka
+        run: |
+          echo "Waiting for Kafka to be ready..."
+          for i in {1..20}; do
+            if kafka-topics.sh --bootstrap-server localhost:9092 --list; then
+              echo "Kafka is ready!"
+              break
+            fi
+            sleep 5
+          done
+
+      - name: Create a test topic
+        run: |
+          kafka-topics.sh \
+            --bootstrap-server localhost:9092 \
+            --create \
+            --topic test-topic \
+            --partitions 1 \
+            --replication-factor 1
+
+      - name: Verify topic list
+        run: kafka-topics.sh --bootstrap-server localhost:9092 --list
