@@ -1,3 +1,11 @@
+name: Kafka setup
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  
 jobs:
   test-kafka:
     runs-on: ubuntu-latest
