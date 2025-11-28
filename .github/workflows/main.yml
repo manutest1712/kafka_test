@@ -83,4 +83,13 @@ jobs:
         working-directory: ./demo
         run: |
           python kafka_async_demo.py
+
+      - name: Run Producer + Consumer
+        working-directory: ./demo
+        run: |
+          python producer_blocking.py &
+          sleep 3
+          python consumer_blocking.py &
+          wait
+
           
