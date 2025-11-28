@@ -12,7 +12,7 @@ def delivery_report(err, msg):
         print(f"[Producer] Delivery failed: {err}")
     else:
         print(f"[Producer] Delivered: {msg.value().decode()} "
-              f"to {msg.topic()} [{msg.partition()}] at offset {msg.offset()}")
+              f"to {msg.topic()} [{msg.partition()}] at offset {msg.offset()} -- time {datetime.datetime.now()}")
 
 
 def create_topic():
@@ -39,7 +39,7 @@ def run_producer():
     time.sleep(5)
     print("Producer starting to send messages")
 
-    for i in range(200):
+    for i in range(100):
         msg = f"Message {i}"
         print(f"[Producer] Sending: {msg}")
         producer.produce(TOPIC, value=msg.encode(), callback=delivery_report)
