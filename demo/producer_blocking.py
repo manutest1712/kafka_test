@@ -1,6 +1,7 @@
 from confluent_kafka import Producer
 from confluent_kafka.admin import AdminClient, NewTopic
 import time
+import datetime
 
 BOOTSTRAP_SERVERS = "localhost:9092"
 TOPIC = "my-first-python-topic-man"
@@ -49,5 +50,6 @@ def run_producer():
 
 
 if __name__ == "__main__":
+    print("Producer starting at", datetime.datetime.now())
     create_topic()
     run_producer()
