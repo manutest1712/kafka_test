@@ -52,6 +52,11 @@ def create_topic():
 async def run_producer():
     producer = Producer({"bootstrap.servers": BOOTSTRAP_SERVERS})
 
+    # Sleep 5 seconds before starting sends
+    print("Producer created, about to sleep")
+    await asyncio.sleep(5)
+    print("Sleep returned — event loop is working")
+
     for i in range(5):
         msg = f"Message {i}"
         print(f"[Producer] Sending: {msg}")
