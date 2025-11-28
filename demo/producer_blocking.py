@@ -39,11 +39,12 @@ def run_producer():
     time.sleep(5)
     print("Producer starting to send messages")
 
-    for i in range(100):
+    for i in range(50):
         msg = f"Message {i}"
         print(f"[Producer] Sending: {msg}")
         producer.produce(TOPIC, value=msg.encode(), callback=delivery_report)
         producer.poll(0)  # Trigger callback
+        time.sleep(0.1)
 
     producer.flush()
     print("[Producer] Finished sending messages.")
