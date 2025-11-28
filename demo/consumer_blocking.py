@@ -33,7 +33,7 @@ def run_consumer():
     print("[Consumer] Waiting for messages...")
 
     received = 0
-    target = 5
+    target = 10
 
     while received < target:
         msg = consumer.poll(5.0)
@@ -45,7 +45,7 @@ def run_consumer():
         if msg.error():
             raise KafkaException(msg.error())
 
-        print(f"[Consumer] Received: {msg.value().decode()}")
+        print(f"[Consumer] Received: {msg.value().decode()} -- time - {datetime.datetime.now()}")
         received += 1
 
         time.sleep(1)
