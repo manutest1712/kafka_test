@@ -17,7 +17,7 @@ def delivery_report(err, msg):
 
 def create_topic():
     admin = AdminClient({"bootstrap.servers": BOOTSTRAP_SERVERS})
-    topic = NewTopic(TOPIC, num_partitions=1, replication_factor=1)
+    topic = NewTopic(TOPIC, num_partitions=5, replication_factor=1)
 
     print(f"Creating topic: {TOPIC}")
     fs = admin.create_topics([topic])
@@ -39,7 +39,7 @@ def run_producer():
     time.sleep(5)
     print("Producer starting to send messages")
 
-    for i in range(5):
+    for i in range(200):
         msg = f"Message {i}"
         print(f"[Producer] Sending: {msg}")
         producer.produce(TOPIC, value=msg.encode(), callback=delivery_report)
