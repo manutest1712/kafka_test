@@ -48,8 +48,6 @@ def run_consumer():
         print(f"[Consumer] Received: {msg.value().decode()} -- time - {datetime.datetime.now()}")
         received += 1
 
-        time.sleep(1)
-
     consumer.close()
     print("[Consumer] Finished consuming all messages.")
 
