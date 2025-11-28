@@ -50,11 +50,11 @@ def create_topic():
 # 2. Producer (async)
 # ------------------------------
 async def run_producer():
+    
     producer = Producer({"bootstrap.servers": BOOTSTRAP_SERVERS})
-
     # Sleep 5 seconds before starting sends
     print("Producer created, about to sleep")
-    #await asyncio.sleep(5)
+    await asyncio.sleep(5)
     print("Sleep returned — event loop is working")
 
     for i in range(5):
@@ -86,8 +86,10 @@ async def run_consumer():
 
     while received < target:
         msg = consumer.poll(5.0)
+        await asyncio.sleep(1)
         if msg is None:
             print("[Consumer] No message yet...")
+            
             continue
 
         if msg.error():
