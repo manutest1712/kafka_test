@@ -55,4 +55,5 @@ def run_consumer():
 if __name__ == "__main__":
     print("Consumer starting at", datetime.datetime.now())
     run_consumer()
+    time.sleep(10)
     delete_topic()
