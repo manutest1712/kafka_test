@@ -54,7 +54,7 @@ async def run_producer():
 
     # Sleep 5 seconds before starting sends
     print("Producer created, about to sleep")
-    await asyncio.sleep(5)
+    #await asyncio.sleep(5)
     print("Sleep returned — event loop is working")
 
     for i in range(5):
