@@ -1,6 +1,7 @@
 from confluent_kafka import Consumer, KafkaException
 from confluent_kafka.admin import AdminClient
 import time
+import datetime
 
 BOOTSTRAP_SERVERS = "localhost:9092"
 TOPIC = "my-first-python-topic-man"
@@ -54,5 +55,6 @@ def run_consumer():
 
 
 if __name__ == "__main__":
+    print("Consumer starting at", datetime.datetime.now())
     run_consumer()
     delete_topic()
