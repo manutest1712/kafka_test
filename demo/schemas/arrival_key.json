@@ -1,0 +1,9 @@
+{
+	"namespace": "chicago.transport",
+	"type": "record",
+	"name": "ArrivalKey",
+	"fields": [
+		{ "name": "station_id", "type": "int" },
+		{ "name": "train_id", "type": "int" }
+	]
+}
